@@ -51,7 +51,7 @@ app.post('/clientes', (req, res) => {
 	 "email@gmail.com", "2023-08-25", 1550)`;*/
 	var sql = `insert into cliente(nome, sobrenome, email,`
 		+ ` data_cadastro, salario) values("${nome}","${sobrenome}",` + `
-	 "${email}", "${data_cadastro}", ${data_cadastro})`;
+	 "${email}", "${data_cadastro}", ${salario})`;
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
