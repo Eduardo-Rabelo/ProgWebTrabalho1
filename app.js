@@ -4,7 +4,10 @@ const mysql = require('mysql');
 const port = 3000
 const bodyParser = require("body-parser")
 const moment = require("moment")
+const formData = require("express-form-data")
+const fs = require("fs")
 
+app.use(formData.parse())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 const connection = mysql.createConnection({
@@ -45,7 +48,7 @@ app.post('/clientes', (req, res) => {
 	var email = req.body.email
 	var data_cadastro = moment().format("yyy-mm-DD")
 	var salario = req.body.salario
-
+	console.log(req.files)
 	/*var sql = `insert into cliente(nome, sobrenome, email,`
 		+ ` data_cadastro, salario) values("PedroAula","SouzaAULA",` + `
 	 "email@gmail.com", "2023-08-25", 1550)`;*/
@@ -55,7 +58,15 @@ app.post('/clientes', (req, res) => {
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
-		res.send(resultado)
+		var caminhoTemp = req.files.avatar.path
+		var caminhoNovo = `./uploads/clientes/${resultado.insetId}.png`
+		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
+			console.log(err)
+			res.send(resultado)
+		})
+		//fs.copyFile(req.files.avatar.path, `./uploads/clientes/${resultado.insetId}.png`,
+
+
 	})
 })
 
