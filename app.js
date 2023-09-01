@@ -31,10 +31,31 @@ app.get('/clientes', (req, res) => {
 	);
 })
 
+app.get('/fornecedores', (req, res) => {
+	connection.query(
+		'select * from fornecedor',
+		(err, results, fields) => {
+			if (err) console.log(err)
+			res.send(results)
+		}
+	);
+})
+
 app.get('/clientes/:id_cliente', (req, res) => {
 	var id_cliente = req.params.id_cliente
 	connection.query(
 		`select * from cliente where id_cliente = ${id_cliente}`,//string inteligente(crase `)
+		(err, results, fields) => {
+			if (err) console.log(err)
+			res.send(results)
+		}
+	);
+})
+
+app.get('/fornecedores/:id_fornecedor', (req, res) => {
+	var id_fornecedor = req.params.id_fornecedor
+	connection.query(
+		`select * from fornecedor where id_fornecedor = ${id_fornecedor}`,//string inteligente(crase `)
 		(err, results, fields) => {
 			if (err) console.log(err)
 			res.send(results)
@@ -49,28 +70,64 @@ app.post('/clientes', (req, res) => {
 	var data_cadastro = moment().format("yyy-mm-DD")
 	var salario = req.body.salario
 	console.log(req.files)
-	/*var sql = `insert into cliente(nome, sobrenome, email,`
-		+ ` data_cadastro, salario) values("PedroAula","SouzaAULA",` + `
-	 "email@gmail.com", "2023-08-25", 1550)`;*/
 	var sql = `insert into cliente(nome, sobrenome, email,`
+		+ ` data_cadastro, salario) values("PedroAula","SouzaAULA",` + `
+	 "email@gmail.com", "2023-08-25", 1550)`;
+	/*var sql = `insert into cliente(nome, sobrenome, email,`
 		+ ` data_cadastro, salario) values("${nome}","${sobrenome}",` + `
-	 "${email}", "${data_cadastro}", ${salario})`;
+	 "${email}", "${data_cadastro}", ${salario})`;*/
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
-		var caminhoTemp = req.files.avatar.path
+		/*var caminhoTemp = req.files.avatar.path
 		var caminhoNovo = `./uploads/clientes/${resultado.insetId}.png`
 		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
 			console.log(err)
 			res.send(resultado)
-		})
+		})*/
 		//fs.copyFile(req.files.avatar.path, `./uploads/clientes/${resultado.insetId}.png`,
 
 
 	})
 })
 
-app.post('/clientes_delete/:id_cliente', (req, res) => {
+
+
+
+app.post('/fornecedores', (req, res) => {
+	var razao = req.body.razao
+	var cpf_cnpj = req.body.cpf_cnpj
+	var contato = req.body.contato
+	var logradouro = req.body.logradouro
+	var cidade = req.body.cidade
+	var uf = req.body.uf
+	console.log(req.files)
+	/*var sql = `insert into cliente(nome, sobrenome, email,`
+		+ ` data_cadastro, salario) values("PedroAula","SouzaAULA",` + `
+	 "email@gmail.com", "2023-08-25", 1550)`;*/
+	var sql = `insert into fornecedor(razao, cpf_cnpj, contato,`
+		+ ` logradouro, cidade, uf) values("${razao}","${cpf_cnpj}",` + `
+	 "${contato}", "${logradouro}", "${cidade}", "${uf}")`;
+
+	//////////////////////AQUI Tá TUDO ERRADO/////////////////////////////////////////////////
+	connection.query(sql, (erro, resultado) => {
+		if (erro) res.send(erro)
+		var caminhoTemp = req.files.avatar.path
+		var caminhoNovo = `./uploads/fornecedores/${resultado.insertId}.png`
+		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
+			console.log(err)
+			res.send(resultado)
+		})
+		////////////////////////////////////////////////////////////////////////
+		//fs.copyFile(req.files.avatar.path, `./uploads/clientes/${resultado.insetId}.png`,
+
+
+	})
+})
+
+
+
+app.delete('/clientes_delete/:id_cliente', (req, res) => {
 	var id_cliente = req.params.id_cliente
 	connection.query(
 		`delete from cliente where id_cliente = ${id_cliente}`,//string inteligente(crase `)
@@ -81,9 +138,52 @@ app.post('/clientes_delete/:id_cliente', (req, res) => {
 	);
 })
 
-app.patch('/clientes', (req, res) => {
-	var sql = `update cliente set nome ="JoaoAula", sobrenome = "SilvaAula"`
-		+ `email = "outro@outro.com", salario = 2500 where id_cliente = 56`
+app.delete('/fornecedores_delete/:id_fornecedor', (req, res) => {
+	var id_fornecedor = req.params.id_fornecedor
+	connection.query(
+		`delete from fornecedor where id_fornecedor = ${id_fornecedor}`,//string inteligente(crase `)
+		(err, results, fields) => {
+			if (err) console.log(err)
+			res.send(results)
+		}
+	);
+})
+
+app.patch('/clientes/:id_cliente', (req, res) => {
+	var id_cliente = req.params.id_cliente
+	var sql = `update cliente set nome ="mudei", sobrenome = "cliente", `
+		+ `email = "outro@outro.com", salario = 2500 where id_cliente = ${id_cliente}`
+
+	connection.query(sql, (erro, resultado) => {
+		if (erro) res.send(erro)
+		res.send(resultado)
+	})
+})
+
+
+/*
+
+  `id_fornecedor` int(11) NOT NULL AUTO_INCREMENT,
+
+  `razao` varchar(100) NOT NULL,
+
+  `cpf_cnpj` varchar(45) NOT NULL,
+
+  `contato` varchar(45) NOT NULL,
+
+  `logradouro` varchar(100) DEFAULT NULL,
+
+  `cidade` varchar(45) DEFAULT NULL,
+
+  `uf` varchar(2) DEFAULT NULL,
+
+
+*/
+
+app.patch('/fornecedores/:id_fornecedor', (req, res) => {
+	var id_fornecedor = req.params.id_fornecedor
+	var sql = `update fornecedor set razao = "mudei", cpf_cnpj = "fornecedor", `
+		+ `contato = "outro@outro.com", logradouro = "2500" where id_fornecedor = ${id_fornecedor}`
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
