@@ -71,14 +71,12 @@ app.post('/clientes', (req, res) => {
 	var salario = req.body.salario
 	console.log(req.files)
 	var sql = `insert into cliente(nome, sobrenome, email,`
-		+ ` data_cadastro, salario) values("PedroAula","SouzaAULA",` + `
-	 "email@gmail.com", "2023-08-25", 1550)`;
-	/*var sql = `insert into cliente(nome, sobrenome, email,`
 		+ ` data_cadastro, salario) values("${nome}","${sobrenome}",` + `
-	 "${email}", "${data_cadastro}", ${salario})`;*/
+	 "${email}", "${data_cadastro}", ${salario})`;
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
+		res.send(resultado)
 		/*var caminhoTemp = req.files.avatar.path
 		var caminhoNovo = `./uploads/clientes/${resultado.insetId}.png`
 		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
@@ -112,12 +110,13 @@ app.post('/fornecedores', (req, res) => {
 	//////////////////////AQUI Tá TUDO ERRADO/////////////////////////////////////////////////
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
-		var caminhoTemp = req.files.avatar.path
+		res.send(resultado)
+		/*var caminhoTemp = req.files.avatar.path
 		var caminhoNovo = `./uploads/fornecedores/${resultado.insertId}.png`
 		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
 			console.log(err)
 			res.send(resultado)
-		})
+		})*/
 		////////////////////////////////////////////////////////////////////////
 		//fs.copyFile(req.files.avatar.path, `./uploads/clientes/${resultado.insetId}.png`,
 
