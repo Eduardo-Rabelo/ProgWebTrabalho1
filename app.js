@@ -149,9 +149,14 @@ app.delete('/fornecedores_delete/:id_fornecedor', (req, res) => {
 })
 
 app.patch('/clientes/:id_cliente', (req, res) => {
+	var nome = req.body.nome
+	var sobrenome = req.body.sobrenome
+	var email = req.body.email
+	var salario = req.body.salario
 	var id_cliente = req.params.id_cliente
-	var sql = `update cliente set nome ="mudei", sobrenome = "cliente", `
-		+ `email = "outro@outro.com", salario = 2500 where id_cliente = ${id_cliente}`
+
+	var sql = `update cliente set nome ="${nome}", sobrenome = "${sobrenome}", `
+		+ `email = "${email}", salario = ${salario} where id_cliente = ${id_cliente}`
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
@@ -180,9 +185,17 @@ app.patch('/clientes/:id_cliente', (req, res) => {
 */
 
 app.patch('/fornecedores/:id_fornecedor', (req, res) => {
+	var razao = req.body.razao
+	var cpf_cnpj = req.body.cpf_cnpj
+	var contato = req.body.contato
+	var logradouro = req.body.logradouro
+	var cidade = req.body.cidade
+	var uf = req.body.uf
 	var id_fornecedor = req.params.id_fornecedor
-	var sql = `update fornecedor set razao = "mudei", cpf_cnpj = "fornecedor", `
-		+ `contato = "outro@outro.com", logradouro = "2500" where id_fornecedor = ${id_fornecedor}`
+
+	var sql = `update fornecedor set razao = "${razao}", cpf_cnpj = "${cpf_cnpj}", `
+		+ `contato = "${contato}", logradouro = "${logradouro}", cidade = "${cidade}", `
+		+ `uf = "${uf}" where id_fornecedor = ${id_fornecedor}`
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
