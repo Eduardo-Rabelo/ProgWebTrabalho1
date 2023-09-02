@@ -76,14 +76,13 @@ app.post('/clientes', (req, res) => {
 
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
-		res.send(resultado)
-		/*var caminhoTemp = req.files.avatar.path
-		var caminhoNovo = `./uploads/clientes/${resultado.insetId}.png`
+		var caminhoTemp = req.files.avatar.path
+		var caminhoNovo = `./uploads/clientes/${resultado.insertId}.png`
 		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
 			console.log(err)
 			res.send(resultado)
-		})*/
-		//fs.copyFile(req.files.avatar.path, `./uploads/clientes/${resultado.insetId}.png`,
+		})
+
 
 
 	})
@@ -100,9 +99,7 @@ app.post('/fornecedores', (req, res) => {
 	var cidade = req.body.cidade
 	var uf = req.body.uf
 	console.log(req.files)
-	/*var sql = `insert into cliente(nome, sobrenome, email,`
-		+ ` data_cadastro, salario) values("PedroAula","SouzaAULA",` + `
-	 "email@gmail.com", "2023-08-25", 1550)`;*/
+
 	var sql = `insert into fornecedor(razao, cpf_cnpj, contato,`
 		+ ` logradouro, cidade, uf) values("${razao}","${cpf_cnpj}",` + `
 	 "${contato}", "${logradouro}", "${cidade}", "${uf}")`;
@@ -111,12 +108,12 @@ app.post('/fornecedores', (req, res) => {
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
 		res.send(resultado)
-		/*var caminhoTemp = req.files.avatar.path
+		var caminhoTemp = req.files.avatar.path
 		var caminhoNovo = `./uploads/fornecedores/${resultado.insertId}.png`
 		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
 			console.log(err)
 			res.send(resultado)
-		})*/
+		})
 		////////////////////////////////////////////////////////////////////////
 		//fs.copyFile(req.files.avatar.path, `./uploads/clientes/${resultado.insetId}.png`,
 
