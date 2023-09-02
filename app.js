@@ -107,7 +107,7 @@ app.post('/fornecedores', (req, res) => {
 	//////////////////////AQUI Tá TUDO ERRADO/////////////////////////////////////////////////
 	connection.query(sql, (erro, resultado) => {
 		if (erro) res.send(erro)
-		res.send(resultado)
+
 		var caminhoTemp = req.files.avatar.path
 		var caminhoNovo = `./uploads/fornecedores/${resultado.insertId}.png`
 		fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
