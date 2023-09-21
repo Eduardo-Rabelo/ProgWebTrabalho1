@@ -1,6 +1,7 @@
 const express = require("express")
 const mysql = require('mysql');
 const connection = require("../config/database")
+
 module.exports = (app) => {
 	const rotas = express.Router()
 	rotas.get("/novarota", (req, res) => {

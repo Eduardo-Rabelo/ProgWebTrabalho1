@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv='X-UA-Compatible' content="'IE=edge">
+	<title>AULA_INICIAL_Fontend</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<table border="1">
+	<tr>
+		<td>Alfreds Futterkiste</td>
+		<td>Maria Anders</td>
+		<td>Germany</td>
+	</tr>
+	<tr>
+		<td>Centro comercial Moctezuma</td>
+		<td>Francisco Chang</td>
+		<td>Mexico</td>
+	</tr>
+</table>
+
+<body>
+	<h1>Inicio aulas frontend - CEFET</h1>
+
+	<script>
+		axios.get("http://localhost:3015/clientes")
+			.then(res => {
+				var tabela = '<table border="1">'
+				console.log(res.data)
+				for (const id_cliente in res.data) {
+					if (Object.hasOwnProperty.call(res.data, id_cliente)) {
+						const element = res.data[id_cliente]
+						tabela += "<tr>"
+						tabela += `<td>${element.nome}</td>`
+						tabela += `<td>${element.sobrenome}</td>`
+						tabela += `<td>${element.email}</td>`
+						tabela += "</tr>"
+						document.write(element.nome + "\n")
+					}
+				}
+				tabela += "</table>"
+				document.write(tabela)
+			})
+	</script>
+
+</body>
+
+</html>
