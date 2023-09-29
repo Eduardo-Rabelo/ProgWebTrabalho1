@@ -8,7 +8,7 @@ const formData = require("express-form-data")
 const fs = require("fs")
 const cors = require("cors")
 
-
+app.use(express.static('uploads'));
 app.use(formData.parse())
 app.use(bodyParser.urlencoded({ extended: true }))
 

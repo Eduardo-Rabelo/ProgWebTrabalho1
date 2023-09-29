@@ -1,6 +1,8 @@
 const express = require("express")
 const mysql = require('mysql');
 const connection = require("../config/database")
+const moment = require("moment")
+const fs = require("node:fs")
 
 module.exports = (app) => {
 	const rotas = express.Router()
@@ -24,7 +26,16 @@ module.exports = (app) => {
 			`select * from cliente where id_cliente = ${id_cliente}`,//string inteligente(crase `)
 			(err, results, fields) => {
 				if (err) console.log(err)
-				res.send(results)
+				var resultado = {}
+				if (results.length > 0) {
+					resultado.id_cliente = results[0].id_cliente
+					resultado.nome = results[0].nome
+					resultado.sobrenome = results[0].sobrenome
+					resultado.email = results[0].email
+					resultado.salario = results[0].salario
+					resultado.data_cadastro = results[0].data_cadastro
+				}
+				res.send(resultado)
 			}
 		);
 	})
