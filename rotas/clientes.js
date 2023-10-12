@@ -75,29 +75,52 @@ module.exports = (app) => {
 
 
 
+	/*
+		rotas.post('/clientes', (req, res) => {
+			var nome = req.body.nome
+			var sobrenome = req.body.sobrenome
+			var email = req.body.email
+			var data_cadastro = moment().format("YYYY-MM-DD")
+			var salario = req.body.salario
+			console.log(req.files)
+			var sql = `insert into cliente(nome, sobrenome, email,`
+				+ ` data_cadastro, salario) values("${nome}","${sobrenome}",` + `
+			 "${email}", "${data_cadastro}", ${salario})`;
+	
+			connection.query(sql, (erro, resultado) => {
+				if (erro) res.send(erro)
+				var caminhoTemp = req.files.avatar.path
+				var caminhoNovo = `./uploads/clientes/${resultado.insertId}.png`
+				fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
+					console.log(err)
+					res.send(resultado)
+				})
+	
+	
+	
+			})
+		})*/
 
 	rotas.post('/clientes', (req, res) => {
+		console.log(req.body)
 		var nome = req.body.nome
 		var sobrenome = req.body.sobrenome
 		var email = req.body.email
 		var data_cadastro = moment().format("YYYY-MM-DD")
 		var salario = req.body.salario
-		console.log(req.files)
-		var sql = `insert into cliente(nome, sobrenome, email,`
-			+ ` data_cadastro, salario) values("${nome}","${sobrenome}",` + `
-		 "${email}", "${data_cadastro}", ${salario})`;
-
+		console.log(req.body)
+		var sql = `insert into cliente(nome, sobrenome, email, ` +
+			`data_cadastro,salario) values("${nome}", "${sobrenome}", ` +
+			`"${email}", "${data_cadastro}", ${salario})`
 		connection.query(sql, (erro, resultado) => {
 			if (erro) res.send(erro)
 			var caminhoTemp = req.files.avatar.path
 			var caminhoNovo = `./uploads/clientes/${resultado.insertId}.png`
 			fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
 				console.log(err)
-				res.send(resultado)
+
 			})
-
-
-
+			res.send(resultado)
 		})
 	})
 
