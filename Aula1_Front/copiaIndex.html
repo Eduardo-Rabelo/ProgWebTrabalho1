@@ -11,28 +11,7 @@
 		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-
-
 <body>
-	<h1>Inicio aulas frontend - CEFET</h1>
-	<table border="1" class="table table-striped-columns">
-		<tr>
-			<td>Alfreds Futterkiste</td>
-			<td>Maria Anders</td>
-			<td>Germany</td>
-		</tr>
-		<tr>
-			<td>Centro comercial Moctezuma</td>
-			<td>Francisco Chang</td>
-			<td>Mexico</td>
-		</tr>
-		<tr>
-			<td>Centro comercial Moctezuma</td>
-			<td>Francisco Chang</td>
-			<td>Mexico</td>
-		</tr>
-	</table>
-
 	<script>
 		var url_string = window.location.href;
 		var url = new URL(url_string);
@@ -53,7 +32,7 @@
 					salario: document.getElementById("lsalario").value
 				}
 				console.log("data", { nome: "nome" })
-				axios.patch('http://localhost:3015/clientes/' + id_cliente,
+				axios.patch('http://localhost:3000/clientes/' + id_cliente,
 					data,
 					{
 						headers: {
@@ -74,20 +53,25 @@
 	</script>
 
 
-	<form method="post" action="http://localhost:3015/clientes">
-		<label for="fname">First name:</label><br>
-		<input type="text" id="fname" name="nome" value="John"><br>
-		<label for="lname">Last name:</label><br>
-		<input type="text" id="lsobrenome" name="sobrenome" value="Doe"><br><br>
-		<label for="email">email:</label><br>
-		<input type="email" id="lemail" name="email" value=""><br><br>
-		<label for="salario">salario:</label><br>
-		<input type="number" id="lsalario" name="salario" value=""><br><br>
-		<label for="avatar">avatar:</label><br>
-		<input type="file" id="lavatar" name="avatar" value=""><br><br>
-		<label for="senha">senha:</label><br>
-		<input type="password" id="lsenha" name="senha" value=""><br><br>
-		<input type="button" onclick="save()" name="Enviar" value="Enviar">
+
+
+
+
+
+	<form method="post" enctype="multipart/form-data">
+		<label for="fname">Primeiro Nome:</label><br>
+		<input type="text" id="fname" name="nome"><br>
+		<label for="lname">Sobrenome:</label><br>
+		<input type="text" id="lsobrenome" name="sobrenome"><br>
+		<label for="lemail">Email:</label><br>
+		<input type="email" id="lemail" name="email"><br>
+		<label for="lsalario">Salario:</label><br>
+		<input type="number" id="lsalario" name="salario"><br>
+		<label for="lavatar">Perfil:</label><br>
+		<input type="file" id="lavatar" name="avatar"><br>
+		<label for="lsenha">Senha:</label><br>
+		<input type="password" id="lsenha" name="lsenha">
+		<input type="button" onclick="save()" name="enviar" value="enviar">
 	</form>
 	<br>
 	<br>
@@ -96,6 +80,7 @@
 		<!-- LISTA DE CLIENTES -->
 
 	</div>
+
 
 
 	<script>
@@ -112,14 +97,14 @@
 		document.getElementById("lsalario").value = salario
 		console.log("Delete", deletarCliente)
 		if (deletarCliente && deletarCliente === "ok") {
-			axios.post("http://localhost:3015/clientes_del/" + id_cliente)
+			axios.post("http://localhost:3000/clientes_del/" + id_cliente)
 				.then(res => {
 					alert("Cliente Apagado com sucesso!")
 				}
 				)
 		}
 
-		axios.get("http://localhost:3015/clientes_all")
+		axios.get("http://localhost:3000/clientes_all")
 			.then(res => {
 				console.log("todos", res)
 				var lista_back = `<ol class="list-group list-group-numbered">`
@@ -144,33 +129,26 @@
 			})
 	</script>
 
-	<!--
-	<script>
-		axios.get("http://localhost:3015/clientes")
-			.then(res => {
-				var tabela = '<table class="table table-striped-columns">'
-				console.log(res.data)
-				for (const id_cliente in res.data) {
-					if (Object.hasOwnProperty.call(res.data, id_cliente)) {
-						const element = res.data[id_cliente]
-						tabela += "<tr>"
-						tabela += `<td>${element.nome}</td>`
-						tabela += `<td>${element.sobrenome}</td>`
-						tabela += `<td>${element.email}</td>`
-						tabela += "</tr>"
-						document.write(element.nome + "\n")
-					}
-				}
-				tabela += "</table>"
-				document.write(tabela)
-			})
-	</script>
--->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
 </body>
-
 
 </html>

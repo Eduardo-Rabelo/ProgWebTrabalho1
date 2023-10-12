@@ -1,27 +1,34 @@
 const express = require("express")
-const mysql = require('mysql');
+//const mysql = require('mysql');
 const connection = require("../config/database")
 const moment = require("moment")
 const fs = require("node:fs")
 
 module.exports = (app) => {
 	const rotas = express.Router()
-	rotas.get("/novarota", (req, res) => {
-		res.send("Nova rota pra cliente")
-	})
 
-	rotas.get('/clientes', (req, res) => {
+	rotas.get('/clientes_all', (requisition, answer) => {
 		connection.query(
-			'select * from cliente',
-			(err, results, fields) => {
-				if (err) console.log(err)
-				res.send(results)
+			'select * from cliente order by id_cliente desc limit 10',
+			(mensagemDeErro, resultados, metaDataDosClientes) => {
+				if (mensagemDeErro) console.log(mensagemDeErro)
+				answer.send(resultados)
 			}
 		);
 	})
 
-	rotas.get('/clientes/:id_cliente', (req, res) => {
-		var id_cliente = req.params.id_cliente
+	rotas.get('/clientes', (requisicao, resposta) => {
+		connection.query(
+			'select * from cliente',
+			(mensagemDeErro, resultados, metaDataDosClientes) => {
+				if (mensagemDeErro) console.log(mensagemDeErro)
+				resposta.send(resultados)
+			}
+		);
+	})
+
+	rotas.get('/clientes_byid/:idDoCliente', (req, res) => {
+		var id_cliente = req.params.idDoCliente
 		connection.query(
 			`select * from cliente where id_cliente = ${id_cliente}`,//string inteligente(crase `)
 			(err, results, fields) => {
@@ -40,11 +47,40 @@ module.exports = (app) => {
 		);
 	})
 
+	rotas.get('/clientes_email/:email', (req, res) => {
+		var email = req.params.email
+		var sql = `select * from cliente where email = "${email}"`//string inteligente(crase `)
+		connection.query(
+			sql,
+			(err, results, fields) => {
+				if (err) console.log(err)
+				if (results.length > 0) res.send({ existe: true })
+				else res.send({ existe: false })
+
+			}
+		);
+	})
+
+
+	rotas.delete('/clientes_del/:id_cliente', (req, res) => {
+		var id_cliente = req.params.id_cliente
+		connection.query(
+			`delete from cliente where id_cliente = ${id_cliente}`,//string inteligente(crase `)
+			(err, results, fields) => {
+				if (err) console.log(err)
+				res.send(results)
+			}
+		);
+	})
+
+
+
+
 	rotas.post('/clientes', (req, res) => {
 		var nome = req.body.nome
 		var sobrenome = req.body.sobrenome
 		var email = req.body.email
-		var data_cadastro = moment().format("yyy-mm-DD")
+		var data_cadastro = moment().format("YYYY-MM-DD")
 		var salario = req.body.salario
 		console.log(req.files)
 		var sql = `insert into cliente(nome, sobrenome, email,`
@@ -64,16 +100,10 @@ module.exports = (app) => {
 
 		})
 	})
-	rotas.delete('/clientes_delete/:id_cliente', (req, res) => {
-		var id_cliente = req.params.id_cliente
-		connection.query(
-			`delete from cliente where id_cliente = ${id_cliente}`,//string inteligente(crase `)
-			(err, results, fields) => {
-				if (err) console.log(err)
-				res.send(results)
-			}
-		);
-	})
+
+
+
+
 	rotas.patch('/clientes/:id_cliente', (req, res) => {
 		var nome = req.body.nome
 		var sobrenome = req.body.sobrenome
@@ -90,18 +120,6 @@ module.exports = (app) => {
 		})
 	})
 
-	rotas.get('/clientes/:email', (req, res) => {
-		var email = req.params.email
-		connection.query(
-			`select * from cliente where email = "${email}"`,//string inteligente(crase `)
-			(err, results, fields) => {
-				if (err) console.log(err)
-				if (results.length > 0) res.send({ existe: true })
-				else res.send({ existe: false })
-
-			}
-		);
-	})
 
 	app.use("/", rotas)
 }
