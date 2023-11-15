@@ -92,13 +92,13 @@ module.exports = (app) => {
 		//////////////////////AQUI Tá TUDO ERRADO/////////////////////////////////////////////////
 		connection.query(sql, (erro, resultado) => {
 			if (erro) res.send(erro)
-
-			var caminhoTemp = req.files.avatar.path
-			var caminhoNovo = `./uploads/fornecedores/${resultado.insertId}.png`
-			fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
-				console.log(err)
-				res.send(resultado)
-			})
+			/*
+						var caminhoTemp = req.files.avatar.path
+						var caminhoNovo = `./uploads/fornecedores/${resultado.insertId}.png`
+						fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
+							console.log(err)
+							res.send(resultado)
+						})*/
 			////////////////////////////////////////////////////////////////////////
 			//fs.copyFile(req.files.avatar.path, `./uploads/clientes/${resultado.insetId}.png`,
 

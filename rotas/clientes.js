@@ -86,7 +86,7 @@ module.exports = (app) => {
 			var sql = `insert into cliente(nome, sobrenome, email,`
 				+ ` data_cadastro, salario) values("${nome}","${sobrenome}",` + `
 			 "${email}", "${data_cadastro}", ${salario})`;
-	
+
 			connection.query(sql, (erro, resultado) => {
 				if (erro) res.send(erro)
 				var caminhoTemp = req.files.avatar.path
@@ -95,9 +95,9 @@ module.exports = (app) => {
 					console.log(err)
 					res.send(resultado)
 				})
-	
-	
-	
+
+
+
 			})
 		})*/
 
@@ -114,16 +114,16 @@ module.exports = (app) => {
 			`"${email}", "${data_cadastro}", ${salario})`
 		connection.query(sql, (erro, resultado) => {
 			if (erro) res.send(erro)
+			/*
 			var caminhoTemp = req.files.avatar.path
 			var caminhoNovo = `./uploads/clientes/${resultado.insertId}.png`
 			fs.copyFile(caminhoTemp, caminhoNovo, (err) => {
 				console.log(err)
 
 			})
-			res.send(resultado)
+			res.send(resultado)*/
 		})
 	})
-
 
 
 

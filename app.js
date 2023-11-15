@@ -8,8 +8,7 @@ const fs = require("fs")
 const cors = require("cors")
 const moment = require("moment")
 
-app.use(formData.parse())
-app.use(bodyParser.urlencoded({ extended: true }))
+
 
 
 var corsOptions = {
@@ -17,8 +16,10 @@ var corsOptions = {
 	optionsSuccessStatus: 200
 }
 
+app.use(cors(corsOptions))
 app.use(express.static('uploads'))
-app.use(cors())
+app.use(formData.parse())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 require("./rotas/clientes")(app)
 require("./rotas/fornecedores")(app)
@@ -32,3 +33,13 @@ app.listen(port, () => {
 })
 
 
+/*
+import { createRoot } from 'react-dom/client';
+
+// Clear the existing HTML content
+document.body.innerHTML = '<div id="app"></div>';
+
+// Render your React component instead
+const root = createRoot(document.getElementById('app'));
+root.render(<h1>Hello, world</h1>);
+*/

@@ -63,6 +63,8 @@
 					})
 					.then(res => {
 						console.log(res)
+						alert("Cliente Atualizado com sucesso!")
+						window.location.href = "index.html"
 					})
 					.catch(error => {
 						console.log(error)
@@ -75,7 +77,7 @@
 					sobrenome: document.getElementById("lsobrenome").value,
 					email: document.getElementById("lemail").value,
 					salario: document.getElementById("lsalario").value,
-					avatar: document.getElementById("avatar").value
+					//avatar: document.getElementById("avatar").value
 				}, {
 					headers: {
 						'Content-Type': 'multipart/form-data'
@@ -83,6 +85,8 @@
 				})
 					.then(res => {
 						console.log(res)
+						alert("Cliente Criado com sucesso!")
+						window.location.href = "index.html"
 					})
 					.catch(error => {
 						console.log(error)
@@ -231,13 +235,62 @@
 					})
 					.then(res => {
 						console.log(res)
+						alert("Fornecedor Atualizado com sucesso!")
+						window.location.href = "index.html"
 					})
 					.catch(error => {
 						console.log(error)
 					})
+
+
 			} else {
 				//CODIGO INSERIR
+				var data = {
+					razao: document.getElementById("id_razao").value,
+					cpf_cnpj: document.getElementById("id_cpf_cnpj").value,
+					contato: document.getElementById("id_contato").value,
+					logradouro: document.getElementById("id_logradouro").value,
+					cidade: document.getElementById("id_cidade").value,
+					uf: document.getElementById("id_uf").value
+				}
 
+				console.log("data", { razao: "razao" })
+				axios.post('http://localhost:3015/fornecedores/',
+					data,
+					{
+						headers: {
+							'Content-Type': 'multipart/form-data'
+						}
+					})
+					.then(res => {
+						console.log(res)
+						console.log("criei o fornecedor")
+						alert("Fornecedor Criado com sucesso!")
+						window.location.href = "index.html"
+					})
+					.catch(error => {
+						console.log(error)
+					})
+				/*
+								const { data } = axios.post('http://localhost:3015/fornecedores', {
+									razao: document.getElementById("id_razao").value,
+									cpf_cnpj: document.getElementById("id_cpf_cnpj").value,
+									contato: document.getElementById("id_contato").value,
+									logradouro: document.getElementById("id_logradouro").value,
+									cidade: document.getElementById("id_cidade").value,
+									uf: document.getElementById("id_uf").value
+								}, {
+									headers: {
+										'Content-Type': 'multipart/form-data'
+									}
+								})
+									.then(res => {
+										console.log(res)
+									})
+									.catch(error => {
+										console.log(error)
+									})
+				*/
 			}
 
 		}
