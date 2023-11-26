@@ -61,6 +61,25 @@ module.exports = (app) => {
 		);
 	})
 
+	rotas.get('/clientes_email_all/:nome/:email', (req, res) => {
+		var email = req.params.email
+		var nome = req.params.nome
+		var sql = `select * from cliente where email = "${email}" AND nome = "${nome}"`//string inteligente(crase `)
+		connection.query(
+			sql,
+			(err, results, fields) => {
+				if (err) {
+					console.log(err)
+					res.status(500).send('Erro no servidor');
+				} else if (results.length > 0) {
+					res.json(results);
+				} else {
+					res.send({ existe: false })
+				}
+			}
+		);
+	})
+
 
 	rotas.delete('/clientes_del/:id_cliente', (req, res) => {
 		var id_cliente = req.params.id_cliente
